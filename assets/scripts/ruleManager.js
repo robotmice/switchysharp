@@ -845,7 +845,10 @@ RuleManager.parseRuleList = function parseRuleList(data) {
 RuleManager.parseSwitchyRuleList = function parseSwitchyRuleList(data) {
     if (data == null)
         return;
-
+    //Base64 encoded list
+    //if($.base64Encode($.base64Decode(data)) == data) {
+        data = $.base64Decode(data); 
+    //}
     data = (/#BEGIN((?:.|[\n\r])+)#END/i).exec(data);
     if (!data || data.length < 2)
         return;
@@ -878,6 +881,7 @@ RuleManager.parseSwitchyRuleList = function parseSwitchyRuleList(data) {
 
         rules[patternType].push(line);
     }
+    console.log(JSON.stringify(rules));
 
     Settings.setObject("ruleListRules", rules);
 
